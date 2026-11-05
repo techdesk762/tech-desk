@@ -12,5 +12,7 @@
   "https://hacks.mozilla.org/2026/02/making-webassembly-a-first-class-language-on-the-web/",
   "https://blog.cloudflare.com/private-origins-public-to-private/",
   "https://developers.googleblog.com/smaller-apps-and-faster-gpu-inference-with-litert-in-google-play-services/",
-  "https://blog.cloudflare.com/zero-wire/"
+  "https://blog.cloudflare.com/zero-wire/",
+  "https://hacks.mozilla.org/2026/05/trustworthy-javascript-for-the-open-web/",
+  "https://github.blog/engineering/architecture-optimization/the-bridge-to-agent-scale-git-infrastructure/"
 ]
