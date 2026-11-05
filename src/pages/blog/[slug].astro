@@ -1,0 +1,58 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { site } from '../../site.config.js';
+
+export async function getStaticPaths() {
+  const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+  );
+  return posts.map((post) => {
+    const related = posts
+      .filter((p) => p.id !== post.id && p.data.tags.some((t) => post.data.tags.includes(t)))
+      .slice(0, 3);
+    return { params: { slug: post.id }, props: { post, related } };
+  });
+}
+
+const { post, related } = Astro.props;
+const { Content } = await render(post);
+const d = post.data;
+const fmt = (x: Date) => x.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: d.title,
+  description: d.description,
+  datePublished: d.pubDate.toISOString(),
+  dateModified: (d.updated ?? d.pubDate).toISOString(),
+  image: d.cover ? new URL(d.cover, Astro.site).href : undefined,
+  author: { '@type': 'Organization', name: site.author },
+  publisher: { '@type': 'Organization', name: site.name },
+  mainEntityOfPage: new URL(Astro.url.pathname, Astro.site).href,
+};
+---
+<Base title={d.title} description={d.description} image={d.cover} type="article" jsonLd={jsonLd} pubDate={d.pubDate} updated={d.updated}>
+  <article>
+    <h1>{d.title}</h1>
+    <p class="meta">By {site.author} &middot; <time datetime={d.pubDate.toISOString()}>{fmt(d.pubDate)}</time></p>
+    {d.cover && <img class="cover" src={d.cover} alt={d.coverAlt} width="1200" height="630" />}
+    <div class="prose"><Content /></div>
+
+    {d.sources.length > 0 && (
+      <section class="sources">
+        <h2>Sources</h2>
+        <ul>{d.sources.map((s) => <li><a href={s.url} rel="noopener">{s.title}</a></li>)}</ul>
+      </section>
+    )}
+
+    {related.length > 0 && (
+      <section class="related">
+        <h2>Related</h2>
+        <ul>{related.map((r) => <li><a href={`/blog/${r.id}`}>{r.data.title}</a></li>)}</ul>
+      </section>
+    )}
+
+    <p class="disclosure">This article was drafted with AI assistance from the linked sources and passed an automated fact-check before publishing. Spotted a mistake? <a href={`mailto:${site.email}`}>Tell us</a> and we will correct or remove it.</p>
+  </article>
+</Base>

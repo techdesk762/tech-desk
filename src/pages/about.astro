@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../site.config.js';
+---
+<Base title="About" description={`About ${site.name}`}>
+  <h1>About {site.name}</h1>
+  <div class="prose">
+    <p>{site.name} explains new developer tools, releases and research in plain English: what changed, who it affects and what to do about it.</p>
+    <h2>How articles are made</h2>
+    <p>Each day an automated pipeline scans primary sources such as official engineering blogs, release notes and research feeds. It picks topics that matter to developers, drafts an original explainer using only facts found in the source, and runs an independent fact-check that compares every claim against the source text. Articles that fail the check are never published.</p>
+    <p>We link every source at the bottom of the article and never copy source text. Articles are AI-assisted, and we say so on every page.</p>
+    <h2>Corrections</h2>
+    <p>If we got something wrong, email <a href={`mailto:${site.email}`}>{site.email}</a>. Verified errors are fixed or the article is removed.</p>
+  </div>
+</Base>

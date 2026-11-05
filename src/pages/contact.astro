@@ -1,0 +1,11 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../site.config.js';
+---
+<Base title="Contact" description={`Contact ${site.name}`}>
+  <h1>Contact</h1>
+  <div class="prose">
+    <p>Corrections, takedown requests and general questions: <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+    <p>We aim to reply within three business days.</p>
+  </div>
+</Base>
