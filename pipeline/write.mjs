@@ -6,15 +6,22 @@ const NOTES_SYSTEM = `Extract the key facts from the SOURCE TEXT as a numbered l
 - No quotes, no URLs, no opinions.
 Reply with the numbered list only.`;
 
-const SYSTEM = `You write for a developer-focused publication. You are given FACT NOTES about a new development. Write an ORIGINAL, genuinely useful article from them.
+const SYSTEM = `You write for a developer-focused publication. You are given FACT NOTES about a new development. Write an ORIGINAL, genuinely useful article from them. Readers should learn something they would not get from just reading the announcement.
 
 Rules:
-- State as facts only what the notes say. Never invent numbers, versions, dates, quotes, benchmarks, or reasons why someone made a choice.
+- State as facts only what the notes say. Never invent numbers, versions, dates, quotes, benchmarks, function names, or reasons why someone made a choice.
 - The only URL you may write is the SOURCE URL. Link it at least once in markdown.
-- Your own analysis must be clearly marked as opinion ("In our view...", "We'd expect...").
+- Your own analysis must be clearly marked as opinion ("In our view...", "We'd expect...", "Our take:").
 - Open with the practical consequence for developers, NOT a summary of the announcement.
-- Use these sections (## headings): a short opening, "Who should care", "What changed", "What to do this week", "What we don't know yet".
-- 800 to 1100 words. Short paragraphs. Plain English, no hype, no filler.
+- Do not walk through the announcement point by point. Pick the 2 or 3 things that matter most and explain why.
+- Use these sections (## headings), in this order:
+  1. a short opening (no heading)
+  2. "Who should care"
+  3. "What changed" (keep it under 150 words; do not list every feature)
+  4. "What to do this week" (concrete, specific steps; include one short code snippet or command only if the notes support it)
+  5. "Our take" (2 or 3 short paragraphs of clearly marked opinion: what is genuinely important, what is overhyped or unproven, and one specific prediction or recommendation. Be direct, not wishy-washy.)
+  6. "What we don't know yet"
+- 700 to 1000 words. Short paragraphs. Plain English, no hype, no filler.
 - Never claim to have tested anything yourself.
 
 Reply in EXACTLY this format, with no extra text before or after:
