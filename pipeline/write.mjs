@@ -1,18 +1,40 @@
-import { ask, parseJson } from './lib.mjs';
+import { ask } from './lib.mjs';
 
 const SYSTEM = `You write for a developer-focused publication. Write an ORIGINAL, genuinely useful article from the SOURCE TEXT provided.
 
 Rules:
-- Use only facts present in the source text. If something is not in the source, do not state it. No invented numbers, versions, dates, quotes or benchmarks.
+- Use only facts present in the source text. If something is not in the source, do not state it. No invented numbers, versions, dates, quotes, benchmarks or URLs.
+- Only link URLs that appear in the source text or that are the SOURCE URL itself.
 - Do not copy or closely paraphrase sentences. Explain in your own structure and words. Any direct quote must be under 15 words and attributed.
 - Add value: explain why it matters, who is affected, trade-offs, and concrete next steps for a developer. You may add general well-established technical context, clearly framed as background, never as a claim about the source.
-- Voice: clear, direct, plain English, first person plural ("we") is fine. No filler, no hype, no "In today's fast-paced world".
-- Length 800-1300 words. Use ## subheadings, short paragraphs, and code blocks or a comparison table only when they genuinely help.
-- Link the original source in the text at least once using markdown.
+- Voice: clear, direct, plain English. No filler, no hype.
+- Length 800-1300 words. Use ## subheadings and short paragraphs. Use code blocks or a table only when they genuinely help.
+- Link the SOURCE URL in the text at least once using markdown.
 - Never claim to have tested anything yourself.
 
-Reply with JSON only:
-{"title":"...","description":"150-160 char meta description","tags":["2-4 lowercase tags"],"coverAlt":"short alt text describing an abstract cover image","body":"markdown, no H1"}`;
+Reply in EXACTLY this format, with no extra text before or after:
+TITLE: the title
+DESCRIPTION: 150-160 character meta description
+TAGS: two to four lowercase tags, comma separated
+COVER_ALT: short alt text for an abstract cover image
+---BODY---
+the article in markdown (no H1 heading)`;
+
+function parseDraft(text) {
+  let t = text.trim();
+  if (t.startsWith('```')) t = t.replace(/^```\w*\n/, '').replace(/\n```$/, '');
+  const parts = t.split(/^---BODY---\s*$/m);
+  if (parts.length < 2) throw new Error('No ---BODY--- marker in model output');
+  const head = parts[0];
+  const body = parts.slice(1).join('\n').trim();
+  const get = (k) => (head.match(new RegExp('^' + k + ':\\s*(.+)$', 'mi')) || [])[1]?.trim();
+  const title = get('TITLE');
+  const description = get('DESCRIPTION');
+  if (!title || !description) throw new Error('Missing TITLE or DESCRIPTION');
+  if (body.length < 500) throw new Error('Body too short');
+  const tags = (get('TAGS') || '').split(',').map((x) => x.trim().toLowerCase()).filter(Boolean).slice(0, 4);
+  return { title, description, tags, coverAlt: get('COVER_ALT') || 'Abstract cover graphic', body };
+}
 
 export async function write(item) {
   const out = await ask(
@@ -20,5 +42,5 @@ export async function write(item) {
     `SOURCE URL: ${item.url}\nSOURCE TITLE: ${item.title}\nANGLE: ${item.angle}\n\nSOURCE TEXT:\n${item.sourceText}`,
     6000,
   );
-  return parseJson(out);
+  return parseDraft(out);
 }
