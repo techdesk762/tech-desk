@@ -20,8 +20,12 @@ export function parseJson(text) {
   return JSON.parse(text.slice(start, end + 1));
 }
 
-export const slugify = (s) =>
-  s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 70);
+export const slugify = (s) => {
+  const full = s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  if (full.length <= 70) return full;
+  const cut = full.slice(0, 70);
+  return cut.slice(0, cut.lastIndexOf('-')) || cut;
+};
 
 export function stripHtml(html) {
   return html
