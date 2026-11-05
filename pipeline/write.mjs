@@ -1,17 +1,20 @@
 import { ask } from './lib.mjs';
 
-const SYSTEM = `You write for a developer-focused publication. Write an ORIGINAL, genuinely useful article from the SOURCE TEXT provided.
+const NOTES_SYSTEM = `Extract the key facts from the SOURCE TEXT as a numbered list of short notes.
+- 12 to 20 notes, each under 25 words, written in YOUR OWN words (never copy phrases).
+- Only facts the source states: what it is, what changed, versions, dates, numbers, requirements, limitations, who is affected.
+- No quotes, no URLs, no opinions.
+Reply with the numbered list only.`;
+
+const SYSTEM = `You write for a developer-focused publication. You are given FACT NOTES about a new development. Write an ORIGINAL, genuinely useful article from them.
 
 Rules:
-- Use only facts present in the source text. If something is not in the source, do not state it. No invented numbers, versions, dates, quotes, benchmarks or URLs.
-- The only URL you may link is the SOURCE URL. Never write any other URL.
-- Never explain WHY the source's authors made a choice, and never add numbers, tables of metrics or step-by-step instructions, unless the source says so. Describe what the source says. Put your own analysis in clearly marked opinion sentences such as "In our view...".
-- Prefer a shorter, accurate article (800 words) over a longer one with extra detail.
-- Do not copy or closely paraphrase sentences. Explain in your own structure and words. Any direct quote must be under 15 words and attributed.
-- Add value: explain why it matters, who is affected, trade-offs, and concrete next steps for a developer. You may add general well-established technical context, clearly framed as background, never as a claim about the source.
-- Voice: clear, direct, plain English. No filler, no hype.
-- Length 800-1300 words. Use ## subheadings and short paragraphs. Use code blocks or a table only when they genuinely help.
-- Link the SOURCE URL in the text at least once using markdown.
+- State as facts only what the notes say. Never invent numbers, versions, dates, quotes, benchmarks, or reasons why someone made a choice.
+- The only URL you may write is the SOURCE URL. Link it at least once in markdown.
+- Your own analysis must be clearly marked as opinion ("In our view...", "We'd expect...").
+- Open with the practical consequence for developers, NOT a summary of the announcement.
+- Use these sections (## headings): a short opening, "Who should care", "What changed", "What to do this week", "What we don't know yet".
+- 800 to 1100 words. Short paragraphs. Plain English, no hype, no filler.
 - Never claim to have tested anything yourself.
 
 Reply in EXACTLY this format, with no extra text before or after:
@@ -39,9 +42,10 @@ function parseDraft(text) {
 }
 
 export async function write(item) {
+  const notes = await ask(NOTES_SYSTEM, `SOURCE TITLE: ${item.title}\n\nSOURCE TEXT:\n${item.sourceText}`, 1500);
   const out = await ask(
     SYSTEM,
-    `SOURCE URL: ${item.url}\nSOURCE TITLE: ${item.title}\nANGLE: ${item.angle}\n\nSOURCE TEXT:\n${item.sourceText}`,
+    `SOURCE URL: ${item.url}\nSOURCE TITLE: ${item.title}\nANGLE: ${item.angle}\n\nFACT NOTES:\n${notes}`,
     6000,
   );
   return parseDraft(out);
