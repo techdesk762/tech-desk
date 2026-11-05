@@ -1,7 +1,7 @@
 // EDIT THESE before deploying.
 export const site = {
   name: 'TECH DESK',
-  url: 'https://techdesk.info', // your real custom domain
+  url: 'https://tech-desk.info', // your real custom domain
   description: 'Plain-English explainers on new developer tools, releases and research.',
   email: 'techdesk61@gmail.com',
   author: 'Tech Desk Editorial',
