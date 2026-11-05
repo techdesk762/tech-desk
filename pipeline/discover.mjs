@@ -48,7 +48,7 @@ export async function discover(seen, count) {
   const out = await ask(
     'You are the editor of a developer-focused tech publication. Choose topics that give working developers durable value: new releases, meaningful changes, security issues with practical impact, useful research. Skip gossip, politics, funding news, clickbait, and anything that would need claims you cannot verify from the source. Prefer variety. Reply with JSON only.',
     `Pick up to ${count} items from this list. For each, give a distinct original angle (e.g. "what changed and what to do", "how it compares to the alternative", "the practical impact").\n\n${list}\n\nJSON: {"picks":[{"index":0,"angle":"..."}]}`,
-    800,
+    2000,
   );
   const picks = parseJson(out).picks ?? [];
 
