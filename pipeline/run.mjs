@@ -17,7 +17,7 @@ const report = [`# Pipeline run ${new Date().toISOString()}`, ''];
 
 const q = (s) => JSON.stringify(s); // JSON strings are valid YAML
 
-function frontmatter(d, slug, cover, item) {
+function frontmatter(d, cover, item) {
   const now = new Date().toISOString();
   return [
     '---',
@@ -25,12 +25,18 @@ function frontmatter(d, slug, cover, item) {
     `description: ${q(d.description)}`,
     `pubDate: ${q(now)}`,
     `tags: ${JSON.stringify((d.tags || []).map((t) => String(t).toLowerCase()).slice(0, 4))}`,
-    `cover: ${q(cover)}`,
-    `coverAlt: ${q(d.coverAlt || 'Abstract cover graphic')}`,
+    `cover: ${q(cover.src)}`,
+    `coverAlt: ${q(cover.alt || 'Cover graphic')}`,
     `sources:\n  - title: ${q(item.title)}\n    url: ${q(item.url)}`,
     '---',
     '',
   ].join('\n');
+}
+
+function creditLine(cover) {
+  if (!cover.credit) return '';
+  const name = cover.credit.name.replace(/[\[\]]/g, '');
+  return `\n\n---\n\n*Cover photo by [${name}](${cover.credit.url}) on [${cover.credit.site}](${cover.credit.siteUrl}).*\n`;
 }
 
 const items = await discover(seen, config.maxPostsPerRun + 2); // pick a few extra; some will fail the gate
@@ -49,11 +55,11 @@ for (const item of items) {
     const slug = slugify(draft.title);
     const file = path.join(postsDir, `${slug}.md`);
     if (fs.existsSync(file)) { report.push(`- SKIPPED (duplicate slug): ${slug}`); continue; }
-    const cover = await makeCover(slug, imgDir);
+    const cover = await makeCover(slug, draft.title, imgDir);
     fs.mkdirSync(postsDir, { recursive: true });
-    fs.writeFileSync(file, frontmatter(draft, slug, cover, item) + draft.body.trim() + '\n');
+    fs.writeFileSync(file, frontmatter(draft, cover, item) + draft.body.trim() + creditLine(cover));
     published++;
-    report.push(`- PUBLISHED: [${draft.title}](/blog/${slug}) (${check.words} words, scores ${check.scores.accuracy}/${check.scores.originality}/${check.scores.usefulness})`, `  - source: ${item.url}`);
+    report.push(`- PUBLISHED: [${draft.title}](/blog/${slug}) (${check.words} words, scores ${check.scores.accuracy}/${check.scores.originality}/${check.scores.usefulness}, cover: ${cover.credit ? 'stock photo' : 'generated'})`, `  - source: ${item.url}`);
   } catch (e) {
     report.push(`- ERROR: ${item.title}: ${e.message}`);
   }
