@@ -57,7 +57,7 @@ export async function discover(seen, count) {
     const c = candidates[p.index];
     if (!c) continue;
     try {
-      const sourceText = stripHtml(await fetchText(c.url)).slice(0, 14000);
+      const sourceText = stripHtml(await fetchText(c.url)).slice(0, 30000);
       if (sourceText.length < 1500) throw new Error('source too short');
       result.push({ ...c, angle: p.angle, sourceText });
     } catch (e) {
