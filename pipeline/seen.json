@@ -40,5 +40,7 @@
   "https://github.com/GoogleChrome/modern-web-guidance",
   "https://hugovk.dev/blog/2026/lock-github-actions/",
   "https://blog.cloudflare.com/choosing-quepaxa/",
-  "https://developers.googleblog.com/a2ui-10-build-delightful-fast-reliable-agentic-experiences/"
+  "https://developers.googleblog.com/a2ui-10-build-delightful-fast-reliable-agentic-experiences/",
+  "https://www.wiz.io/blog/cve-2026-119618-rce-apache-http-server-vulnerability",
+  "https://blog.atuin.sh/threads-agent-sessions/"
 ]
