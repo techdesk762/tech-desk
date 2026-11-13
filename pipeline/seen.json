@@ -42,5 +42,8 @@
   "https://blog.cloudflare.com/choosing-quepaxa/",
   "https://developers.googleblog.com/a2ui-10-build-delightful-fast-reliable-agentic-experiences/",
   "https://www.wiz.io/blog/cve-2026-119618-rce-apache-http-server-vulnerability",
-  "https://blog.atuin.sh/threads-agent-sessions/"
+  "https://blog.atuin.sh/threads-agent-sessions/",
+  "https://mehmetince.net/part-3-6-how-i-ended-up-turning-a-22-year-old-postgresql-type-confusion-primitive-into-rce-cve-2026-6460/",
+  "https://blog.rust-lang.org/2026/11/12/Rust-1.100.0/",
+  "https://developers.googleblog.com/catch-go-bugs-that-fuzzing-misses-with-gemini-and-a-constraint-solver/"
 ]
