@@ -45,5 +45,9 @@
   "https://blog.atuin.sh/threads-agent-sessions/",
   "https://mehmetince.net/part-3-6-how-i-ended-up-turning-a-22-year-old-postgresql-type-confusion-primitive-into-rce-cve-2026-6460/",
   "https://blog.rust-lang.org/2026/11/12/Rust-1.100.0/",
-  "https://developers.googleblog.com/catch-go-bugs-that-fuzzing-misses-with-gemini-and-a-constraint-solver/"
+  "https://developers.googleblog.com/catch-go-bugs-that-fuzzing-misses-with-gemini-and-a-constraint-solver/",
+  "https://blog.cloudflare.com/spend-management/",
+  "https://github.blog/ai-and-ml/github-copilot/build-once-run-on-any-agent-a-practical-guide-to-agent-skills/",
+  "https://scottjg.com/posts/2026-11-11-reverse-engineering-my-coway-air-purifier-to-ditch-the-cloud/",
+  "https://web.dev/blog/interop-2027-proposals?hl=en"
 ]
