@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "Claude Code Can Leak Your Account Email to Websites: What to Check"
 description: "Claude Code may put your account email in User-Agent headers on web requests. Here is who is exposed, what the built-in mod does and misses, and what to do now."
 pubDate: "2026-11-06T04:45:09.878Z"
