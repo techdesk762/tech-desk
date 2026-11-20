@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "Lovable apps exposed passports and chats: a pre-launch audit checklist"
 description: "Researchers found 24,664 Lovable sites serving Supabase data without login. Here is what that means for AI-built apps and how to audit yours before launch."
 pubDate: "2026-11-15T04:43:08.045Z"
