@@ -11,16 +11,25 @@ const root = path.resolve(import.meta.dirname, '..');
 const seenFile = path.join(root, 'pipeline/seen.json');
 const postsDir = path.join(root, 'src/content/blog');
 const imgDir = path.join(root, 'public/images');
+const MAX_PENDING_DRAFTS = 6;
 
 const seen = new Set(fs.existsSync(seenFile) ? JSON.parse(fs.readFileSync(seenFile, 'utf8')) : []);
 const report = [`# Pipeline run ${new Date().toISOString()}`, ''];
 
 const q = (s) => JSON.stringify(s); // JSON strings are valid YAML
 
+function pendingDrafts() {
+  if (!fs.existsSync(postsDir)) return 0;
+  return fs.readdirSync(postsDir).filter(
+    (f) => f.endsWith('.md') && /^draft:\s*true\s*$/m.test(fs.readFileSync(path.join(postsDir, f), 'utf8')),
+  ).length;
+}
+
 function frontmatter(d, cover, item) {
   const now = new Date().toISOString();
   return [
     '---',
+    'draft: true',
     `title: ${q(d.title)}`,
     `description: ${q(d.description)}`,
     `pubDate: ${q(now)}`,
@@ -39,33 +48,49 @@ function creditLine(cover) {
   return `\n\n---\n\n*Cover photo by [${name}](${cover.credit.url}) on [${cover.credit.site}](${cover.credit.siteUrl}).*\n`;
 }
 
-const items = await discover(seen, config.maxPostsPerRun + 2); // pick a few extra; some will fail the gate
-let published = 0;
+const EDITOR_PLACEHOLDER = `
 
-for (const item of items) {
-  if (published >= config.maxPostsPerRun) break;
-  seen.add(item.url); // never retry the same source
-  try {
-    const draft = await write(item);
-    const check = await verify(item, draft);
-    if (!check.approved) {
-      report.push(`- REJECTED: ${item.title}`, `  - ${check.reasons.join(' | ')}`);
-      continue;
+<!-- EDITOR NOTE (not shown on the site):
+Before publishing, replace this comment with your own note, for example:
+
+## Editor's note
+
+Two to four sentences from you: what you checked in the source, what you tried yourself, or your own view.
+
+Then change "draft: true" at the top of this file to "draft: false". -->
+`;
+
+const waiting = pendingDrafts();
+let published = 0;
+if (waiting >= MAX_PENDING_DRAFTS) {
+  report.push(`- Queue full: ${waiting} drafts are waiting for review. No new drafts created.`);
+} else {
+  const items = await discover(seen, config.maxPostsPerRun + 2); // pick a few extra; some will fail the gate
+  for (const item of items) {
+    if (published >= config.maxPostsPerRun) break;
+    seen.add(item.url); // never retry the same source
+    try {
+      const draft = await write(item);
+      const check = await verify(item, draft);
+      if (!check.approved) {
+        report.push(`- REJECTED: ${item.title}`, `  - ${check.reasons.join(' | ')}`);
+        continue;
+      }
+      const slug = slugify(draft.title);
+      const file = path.join(postsDir, `${slug}.md`);
+      if (fs.existsSync(file)) { report.push(`- SKIPPED (duplicate slug): ${slug}`); continue; }
+      const cover = await makeCover(slug, draft.title, imgDir);
+      fs.mkdirSync(postsDir, { recursive: true });
+      fs.writeFileSync(file, frontmatter(draft, cover, item) + draft.body.trim() + creditLine(cover) + EDITOR_PLACEHOLDER);
+      published++;
+      report.push(`- DRAFT READY FOR REVIEW: ${draft.title} (${check.words} words, scores ${check.scores.accuracy}/${check.scores.originality}/${check.scores.usefulness})`, `  - file: src/content/blog/${slug}.md`, `  - source: ${item.url}`);
+    } catch (e) {
+      report.push(`- ERROR: ${item.title}: ${e.message}`);
     }
-    const slug = slugify(draft.title);
-    const file = path.join(postsDir, `${slug}.md`);
-    if (fs.existsSync(file)) { report.push(`- SKIPPED (duplicate slug): ${slug}`); continue; }
-    const cover = await makeCover(slug, draft.title, imgDir);
-    fs.mkdirSync(postsDir, { recursive: true });
-    fs.writeFileSync(file, frontmatter(draft, cover, item) + draft.body.trim() + creditLine(cover));
-    published++;
-    report.push(`- PUBLISHED: [${draft.title}](/blog/${slug}) (${check.words} words, scores ${check.scores.accuracy}/${check.scores.originality}/${check.scores.usefulness}, cover: ${cover.credit ? 'stock photo' : 'generated'})`, `  - source: ${item.url}`);
-  } catch (e) {
-    report.push(`- ERROR: ${item.title}: ${e.message}`);
   }
+  if (!items.length) report.push('- No new candidates found.');
 }
 
-if (!items.length) report.push('- No new candidates found.');
 fs.writeFileSync(seenFile, JSON.stringify([...seen].slice(-2000), null, 2));
 const text = report.join('\n');
 console.log(text);
