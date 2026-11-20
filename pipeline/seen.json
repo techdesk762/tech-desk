@@ -63,5 +63,9 @@
   "https://www.wiz.io/blog/nginx-http2-rce-vulnerabilities",
   "https://developers.googleblog.com/accelerating-development-for-massive-git-repositories/",
   "https://jimmyhmiller.com/magic-of-partial-evaluation",
-  "https://developers.googleblog.com/agents-are-sessions-not-requests-size-gke-node-pools-for-ai-agent-sessions/"
+  "https://developers.googleblog.com/agents-are-sessions-not-requests-size-gke-node-pools-for-ai-agent-sessions/",
+  "https://blog.cloudflare.com/nginx2root/",
+  "https://blog.cloudflare.com/java4shell-waf-protection/",
+  "https://www.php.net/releases/8.6/en.php",
+  "https://zerodha.tech/blog/high-performance-distributed-blob-storage/"
 ]
