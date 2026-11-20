@@ -1,0 +1,24 @@
+---
+const { post, hero = false } = Astro.props;
+const d = post.data;
+const fmt = (x: Date) => x.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+const minutes = Math.max(1, Math.round((post.body ?? '').split(/\s+/).length / 220));
+const isNew = Date.now() - d.pubDate.valueOf() < 3 * 24 * 3600 * 1000;
+const href = `/blog/${post.id}/`;
+---
+<article class={hero ? 'hero' : 'card'}>
+  {d.cover && (
+    <a href={href} class="thumb-link" tabindex="-1" aria-hidden="true">
+      <img class="thumb" src={d.cover} alt="" loading={hero ? 'eager' : 'lazy'} width="1200" height="630" />
+    </a>
+  )}
+  <div class="card-body">
+    <p class="chips">
+      {isNew && <span class="chip new">New</span>}
+      {d.tags.slice(0, 2).map((t) => <span class="chip">{t}</span>)}
+    </p>
+    {hero ? <h2><a href={href}>{d.title}</a></h2> : <h3><a href={href}>{d.title}</a></h3>}
+    <p class="desc">{d.description}</p>
+    <p class="meta"><time datetime={d.pubDate.toISOString()}>{fmt(d.pubDate)}</time> &middot; {minutes} min read</p>
+  </div>
+</article>
