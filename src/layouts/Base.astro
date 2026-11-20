@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import { site } from '../site.config.js';
+import Sidebar from '../components/Sidebar.astro';
 
 const {
   title,
@@ -45,22 +46,27 @@ const imageUrl = image ? new URL(image, Astro.site).href : undefined;
   </head>
   <body>
     <header class="site">
-      <div class="wrap">
-        <a class="brand" href="/">{site.name}</a>
+      <div class="shell">
+        <a class="logo" href="/"><span class="logo-mark"></span>{site.name}</a>
         <nav aria-label="Main">
           <a href="/">Latest</a>
-          <a href="/about">About</a>
-          <a href="/contact">Contact</a>
+          <a href="/archive/">Archive</a>
+          <a href="/about/">About</a>
+          <a href="/contact/">Contact</a>
         </nav>
       </div>
     </header>
-    <main><div class="wrap"><slot /></div></main>
+    <div class="shell layout">
+      <main><slot /></main>
+      <aside class="side">
+        <slot name="aside-top" />
+        <Sidebar />
+      </aside>
+    </div>
     <footer class="site">
-      <div class="wrap">
-        <p>
-          <a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/rss.xml">RSS</a>
-        </p>
-        <p>&copy; {new Date().getFullYear()} {site.name}. Articles are drafted with AI assistance from linked primary sources and checked by an automated fact-review step.</p>
+      <div class="shell">
+        <p><a href="/about/">About</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a><a href="/contact/">Contact</a><a href="/rss.xml">RSS</a></p>
+        <p>&copy; {new Date().getFullYear()} {site.name}. Articles are drafted with AI assistance from linked sources. <a href="/about/">How we work</a></p>
       </div>
     </footer>
   </body>
