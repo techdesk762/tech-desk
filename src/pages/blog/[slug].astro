@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import PostCard from '../../components/PostCard.astro';
 import { site } from '../../site.config.js';
 
 export async function getStaticPaths() {
@@ -8,16 +9,22 @@ export async function getStaticPaths() {
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
   );
   return posts.map((post) => {
-    const related = posts
+    let related = posts
       .filter((p) => p.id !== post.id && p.data.tags.some((t) => post.data.tags.includes(t)))
-      .slice(0, 3);
+      .slice(0, 2);
+    if (related.length < 2) {
+      const fill = posts.filter((p) => p.id !== post.id && !related.includes(p));
+      related = [...related, ...fill].slice(0, 2);
+    }
     return { params: { slug: post.id }, props: { post, related } };
   });
 }
 
 const { post, related } = Astro.props;
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
 const d = post.data;
+const toc = headings.filter((h) => h.depth === 2);
+const minutes = Math.max(1, Math.round((post.body ?? '').split(/\s+/).length / 220));
 const fmt = (x: Date) => x.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -33,9 +40,21 @@ const jsonLd = {
 };
 ---
 <Base title={d.title} description={d.description} image={d.cover} type="article" jsonLd={jsonLd} pubDate={d.pubDate} updated={d.updated}>
-  <article>
+  <div slot="aside-top">
+    {toc.length > 1 && (
+      <div class="widget toc">
+        <h3>On this page</h3>
+        <ol>
+          {toc.map((h) => <li><a href={`#${h.slug}`}>{h.text}</a></li>)}
+        </ol>
+      </div>
+    )}
+  </div>
+
+  <article class="article">
+    <p class="chips">{d.tags.slice(0, 3).map((t) => <span class="chip">{t}</span>)}</p>
     <h1>{d.title}</h1>
-    <p class="meta">By {site.author} &middot; <time datetime={d.pubDate.toISOString()}>{fmt(d.pubDate)}</time></p>
+    <p class="meta">By {site.author} &middot; <time datetime={d.pubDate.toISOString()}>{fmt(d.pubDate)}</time> &middot; {minutes} min read</p>
     {d.cover && <img class="cover" src={d.cover} alt={d.coverAlt} width="1200" height="630" />}
     <div class="prose"><Content /></div>
 
@@ -46,13 +65,13 @@ const jsonLd = {
       </section>
     )}
 
-    {related.length > 0 && (
-      <section class="related">
-        <h2>Related</h2>
-        <ul>{related.map((r) => <li><a href={`/blog/${r.id}`}>{r.data.title}</a></li>)}</ul>
-      </section>
-    )}
-
     <p class="disclosure">This article was drafted with AI assistance from the linked sources and passed an automated fact-check before publishing. Spotted a mistake? <a href={`mailto:${site.email}`}>Tell us</a> and we will correct or remove it.</p>
   </article>
+
+  {related.length > 0 && (
+    <section class="related-block">
+      <h2>Keep reading</h2>
+      <div class="grid">{related.map((r) => <PostCard post={r} />)}</div>
+    </section>
+  )}
 </Base>
