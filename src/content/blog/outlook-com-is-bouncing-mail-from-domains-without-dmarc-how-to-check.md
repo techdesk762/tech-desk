@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "Outlook.com Is Bouncing Mail From Domains Without DMARC: How to Check and Fix It"
 description: "Outlook.com is reportedly rejecting some mail from domains with no DMARC record. Here's how to check your DNS, publish a p=none starter policy, and verify delivery."
 pubDate: "2026-11-09T04:51:01.711Z"
