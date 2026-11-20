@@ -2,6 +2,27 @@
 import Base from '../layouts/Base.astro';
 import { site } from '../site.config.js';
 ---
+<Base title="About" description={`About ${site.name}: who runs it and how articles are made.`}>
+  <h1>About {site.name}</h1>
+  <div class="prose">
+    <p>{site.name} explains technology news in plain English: what changed, who it affects, and what you can do about it. Most articles are written for everyday readers, with some deeper dives for developers.</p>
+
+    <h2>Who runs this site</h2>
+    <p>Hi, I'm Shishir, a tech enthusiast. I'm not a specialist in every topic we cover, so I try to be clear about what has been checked and what hasn't. Each article links to its original source, and where I have tried something myself, I say so in an "Editor's note".</p>
+
+    <h2>How articles are made</h2>
+    <p>An automated system reads official sources such as government agencies and company announcements, and drafts an explainer using only facts found in the source. A separate automated check compares the draft to the source, and drafts that fail are discarded. I read each article before it is published. Articles are drafted with AI assistance, and we say so on every article. Parts marked "Our take" are opinion, not fact.</p>
+
+    <h2>What we cover</h2>
+    <p>Scams and fraud alerts, security and privacy changes, updates to popular apps and devices, practical AI tools, and developer tools and releases.</p>
+
+    <h2>Corrections and contact</h2>
+    <p>If we got something wrong, email <a href={`mailto:${site.email}`}>{site.email}</a>. Verified errors are fixed or the article is removed.</p>
+  </div>
+</Base>---
+import Base from '../layouts/Base.astro';
+import { site } from '../site.config.js';
+---
 <Base title="Contact" description={`Contact ${site.name}`}>
   <h1>Contact</h1>
   <div class="prose">
