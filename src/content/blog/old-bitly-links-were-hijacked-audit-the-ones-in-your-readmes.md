@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "Old Bitly Links Were Hijacked. Audit the Ones in Your READMEs"
 description: "Old bit.ly links in decade-old tweets were re-registered and redirected. Here's why short links in READMEs and install scripts are a supply-chain risk, plus an audit checklist."
 pubDate: "2026-11-16T05:19:20.279Z"
