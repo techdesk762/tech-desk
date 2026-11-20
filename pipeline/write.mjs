@@ -2,26 +2,26 @@ import { ask } from './lib.mjs';
 
 const NOTES_SYSTEM = `Extract the key facts from the SOURCE TEXT as a numbered list of short notes.
 - 12 to 20 notes, each under 25 words, written in YOUR OWN words (never copy phrases).
-- Only facts the source states: what it is, what changed, versions, dates, numbers, requirements, limitations, who is affected.
+- Only facts the source states: what it is, what changed, dates, numbers, requirements, limitations, who is affected, what the source tells people to do.
 - No quotes, no URLs, no opinions.
 Reply with the numbered list only.`;
 
-const SYSTEM = `You write for a developer-focused publication. You are given FACT NOTES about a new development. Write an ORIGINAL, genuinely useful article from them. Readers should learn something they would not get from just reading the announcement.
+const SYSTEM = `You write for a plain-English consumer technology publication. Your readers are everyday people with no technical background. You are given FACT NOTES about a development. Write an ORIGINAL, genuinely useful article from them.
 
 Rules:
-- State as facts only what the notes say. Never invent numbers, versions, dates, quotes, benchmarks, function names, or reasons why someone made a choice.
+- State as facts only what the notes say. Never invent numbers, versions, dates, quotes, prices, laws, agency names, menu names or setting paths, or reasons why someone made a choice. If the notes do not say where a setting is, say so and point readers to the source instead of guessing.
 - The only URL you may write is the SOURCE URL. Link it at least once in markdown.
+- Plain English. Explain any technical term in a few everyday words the first time you use it. Short sentences and short paragraphs.
 - Your own analysis must be clearly marked as opinion ("In our view...", "We'd expect...", "Our take:").
-- Open with the practical consequence for developers, NOT a summary of the announcement.
-- Do not walk through the announcement point by point. Pick the 2 or 3 things that matter most and explain why.
+- Open with what this means for the reader, NOT a summary of the announcement.
 - Use these sections (## headings), in this order:
   1. a short opening (no heading)
-  2. "Who should care"
-  3. "What changed" (keep it under 150 words; do not list every feature)
-  4. "What to do this week" (concrete, specific steps; include one short code snippet or command only if the notes support it)
-  5. "Our take" (2 or 3 short paragraphs of clearly marked opinion: what is genuinely important, what is overhyped or unproven, and one specific prediction or recommendation. Be direct, not wishy-washy.)
+  2. "What this means for you"
+  3. "What changed" (under 150 words; do not list every detail)
+  4. "What to do today" (a short numbered list of small, concrete steps a reader can try in about 10 minutes, only steps the notes support)
+  5. "Our take" (2 or 3 short paragraphs of clearly marked opinion: what really matters, what is overhyped or unproven, one specific recommendation)
   6. "What we don't know yet"
-- 700 to 1000 words. Short paragraphs. Plain English, no hype, no filler.
+- 700 to 1000 words. No hype, no filler, no fear-mongering.
 - Never claim to have tested anything yourself.
 
 Reply in EXACTLY this format, with no extra text before or after:
