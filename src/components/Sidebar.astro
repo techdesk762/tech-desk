@@ -1,0 +1,34 @@
+---
+import { getCollection } from 'astro:content';
+import { site } from '../site.config.js';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 5);
+const fmt = (d: Date) => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+---
+<div class="widget">
+  <div class="about-head">
+    <div class="avatar">S</div>
+    <strong>Hi, I'm Shishir</strong>
+  </div>
+  <p>A tech enthusiast. {site.name} explains tech news in plain English, with the original source linked on every article.</p>
+  <a href="/about/">About this site &rarr;</a>
+</div>
+<div class="widget">
+  <h3>Latest</h3>
+  <ul class="latest">
+    {posts.map((p) => (
+      <li>
+        <a href={`/blog/${p.id}/`}>{p.data.title}</a>
+        <time datetime={p.data.pubDate.toISOString()}>{fmt(p.data.pubDate)}</time>
+      </li>
+    ))}
+  </ul>
+  <p style="margin-top:10px"><a href="/archive/">Browse all articles &rarr;</a></p>
+</div>
+<div class="widget">
+  <h3>Follow</h3>
+  <p>Get new articles in your feed reader.</p>
+  <a class="btn" href="/rss.xml">RSS feed</a>
+</div>
