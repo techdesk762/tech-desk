@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "Baseline July 2026: What to Use Now and What Needs a Fallback"
 description: "A practical sort of the July 2026 Baseline digest into safe-now and fallback-first features, plus how to write Baseline status into your browser-support policy."
 pubDate: "2026-11-08T04:40:03.339Z"
