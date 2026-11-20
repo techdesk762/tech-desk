@@ -5,9 +5,9 @@ export const GET: APIRoute = async ({ site }) => {
   const abs = (p: string) => new URL(p, site).href;
   const posts = await getCollection('blog', ({ data }) => !data.draft);
 
-  const pages = ['/', '/about', '/contact', '/privacy', '/terms'].map((p) => ({ loc: abs(p), lastmod: '' }));
+  const pages = ['/', '/about/', '/contact/', '/privacy/', '/terms/'].map((p) => ({ loc: abs(p), lastmod: '' }));
   const items = posts.map((p) => ({
-    loc: abs(`/blog/${p.id}`),
+    loc: abs(`/blog/${p.id}/`),
     lastmod: (p.data.updated ?? p.data.pubDate).toISOString(),
   }));
 
