@@ -1,4 +1,5 @@
 ---
+draft: true
 title: "Baseline August 2026: What You Can Delete After :paused, sibling-count(), and Declarative Shadow DOM"
 description: "A developer's checklist from the August 2026 Baseline digest: three features that are now safe to use, what they replace, and what to drop from your fallbacks."
 pubDate: "2026-11-06T04:45:35.824Z"
