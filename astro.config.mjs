@@ -5,5 +5,5 @@ import { site } from './src/site.config.js';
 export default defineConfig({
   site: site.url,
   integrations: [sitemap()],
-  trailingSlash: 'never',
+  trailingSlash: 'always',
 });
