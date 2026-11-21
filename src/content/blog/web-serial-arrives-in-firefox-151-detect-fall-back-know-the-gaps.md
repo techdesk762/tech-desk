@@ -100,3 +100,8 @@ Firefox's arrival narrows the gap for projects that were Chromium-only, but seve
 - If something breaks, Mozilla asks for feedback on Mozilla Connect, and technical issues can go through support.mozilla.org or a bug report.
 
 The headline is simple: more of your users can now use hardware tools in the browser they already have. The work for you is to detect capability honestly and keep an alternative path ready.
+
+## Editor's note
+
+I compared this article with Mozilla's announcement and confirmed that Web Serial is listed for desktop Firefox 151. I run Firefox 160.0 on my own computer, which is newer than 151. I opened the developer console, typed 'serial' in navigator, and it returned true, so the API is present in my version. I did not test Firefox 151 itself, and I have not connected a serial device, so I can't say how well it works in practice.
+![Firefox 160.0 About window and developer console showing that 'serial' in navigator returns true](/images/web-serial-firefox-160-console.png)
