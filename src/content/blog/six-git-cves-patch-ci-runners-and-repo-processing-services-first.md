@@ -70,3 +70,7 @@ Our recommendation: treat this as a runner-image and bundled-Git problem first. 
 - **Which older versions are affected.** The notes list fixed releases, not the earliest vulnerable version for each flaw. Treat anything below your series' patched release as affected.
 - **Timing of downstream releases.** GitHub Desktop, the Copilot app, Codespaces and Actions are described as coordinated or forthcoming, without dates.
 - **Distribution packaging.** We have no information on how Linux distributions or other package managers are shipping these fixes.
+
+## Editor's note
+
+I compared this article with GitHub's announcement and confirmed the main facts: Git fixes six vulnerabilities, the fix is in Git 2.56.1, and backports are available for the 2.55, 2.54, 2.53, 2.52, 2.51 and 2.50 series. I do not have Git installed on my own computer, so I could not check a version myself, and I have not tested any of these vulnerabilities. If you use Git, please run git --version and compare it with the versions in GitHub's announcement linked below.
