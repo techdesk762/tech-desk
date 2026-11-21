@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 title: "Apple TV adds sign language interpretation: how to switch it on"
 description: "Apple TV's new Sign Language feature adds interpretation to supported Apple Original titles. Here is who it helps, how to turn it on, and what to check first."
 pubDate: "2026-11-21T05:00:45.174Z"
@@ -61,11 +61,6 @@ A short note on other options: this announcement covers only the sign language f
 
 For context on cost: Apple TV is $14.99 a month, with a seven-day free trial for new subscribers. It is available in 170 countries and regions. For a limited time, people who activate a new iPhone, iPad, Apple TV 4K, or Mac get three months of Apple TV free. Apple says its Originals have collected 919 wins and 3,829 nominations so far. Those numbers say nothing about how good this particular feature is, so judge it by how it works for you.
 
-<!-- EDITOR NOTE (not shown on the site):
-Before publishing, replace this comment with your own note, for example:
-
 ## Editor's note
 
-Two to four sentences from you: what you checked in the source, what you tried yourself, or your own view.
-
-Then change "draft: true" at the top of this file to "draft: false". -->
+I don't own an Apple TV, so I haven't tried this feature myself. I compared the steps and supported devices in this article with Apple's announcement. If the setting looks different on your device, check Apple's page linked above.
