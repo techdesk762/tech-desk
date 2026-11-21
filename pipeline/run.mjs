@@ -20,9 +20,12 @@ const q = (s) => JSON.stringify(s); // JSON strings are valid YAML
 
 function pendingDrafts() {
   if (!fs.existsSync(postsDir)) return 0;
-  return fs.readdirSync(postsDir).filter(
-    (f) => f.endsWith('.md') && /^draft:\s*true\s*$/m.test(fs.readFileSync(path.join(postsDir, f), 'utf8')),
-  ).length;
+  return fs.readdirSync(postsDir).filter((f) => {
+    if (!f.endsWith('.md')) return false;
+    const t = fs.readFileSync(path.join(postsDir, f), 'utf8');
+    // only new pipeline drafts that still carry the review placeholder count as "waiting"
+    return /^draft:\s*true\s*$/m.test(t) && t.includes('EDITOR NOTE (not shown on the site)');
+  }).length;
 }
 
 function frontmatter(d, cover, item) {
