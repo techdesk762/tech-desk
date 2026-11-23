@@ -1,6 +1,6 @@
 ---
 draft: false 
-title: title: "A Quick Phone Setup Checklist for the Family Tech Helper"
+title: "A Quick Phone Setup Checklist for the Family Tech Helper"
 description: "Setting up a relative's new phone? Mozilla's open letter pushes one small step, changing the default browser. Here's what it means and how to do it in minutes."
 pubDate: "2026-11-22T04:47:37.085Z"
 tags: ["firefox","privacy","mobile","family tech support"]
@@ -67,4 +67,4 @@ For the exact wording and Mozilla's full argument, read the original [open lette
 
 ## Editor's note
 
-I compared this article with Mozilla's open letter and confirmed the Android and iPhone steps and the claims attributed to Mozilla. I also followed the Android steps on my own phone ([PHONE MODEL] running Android [VERSION]): [WHAT YOU SAW, for example the Set default browser option was under Settings > General, or the menu looked different]. I did not test the iPhone steps, and I have not independently verified Mozilla's privacy claims. Mozilla makes Firefox, so treat this as its recommendation.
+I compared this article with Mozilla's open letter and confirmed the Android and iPhone steps and the claims attributed to Mozilla. I did not try these steps on a phone myself, and I have not independently verified Mozilla's privacy claims. Mozilla makes Firefox, so treat this as its recommendation, and use the help pages linked above if a menu looks different on your phone.
