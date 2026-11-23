@@ -60,3 +60,9 @@ The notes don't specify configuration steps, so follow PyPI's Trusted Publishing
 - **Programmatic access.** The notes describe the web interface only. Whether the same data is available for automated checks in CI isn't covered here.
 - **Enforcement.** Nothing suggests PyPI will require provenance. Only the policy rejecting late file uploads, which began in July 2026, is mentioned.
 - **Case study details.** The OpenSSF funded the project and published a case study of the design patterns and warnings. We haven't covered its contents beyond that.
+
+## Editor's note
+
+I compared this article with PyPI's announcement and confirmed that the new project pages include a Security tab and that PyPI shows provenance information for releases. I then opened the PyPI page for the requests project in my browser. It shows four tabs: Description, Release files, Security and Release history. The Release history tab lists each version with its file count and a provenance status; for the three latest versions (2.34.2, 2.34.1 and 2.34.0) it showed 2 release files and "Full provenance". I have not published a package myself, so I have not tried the steps for improving a project's provenance.
+
+![PyPI release history for requests, showing 2 release files and Full provenance for versions 2.34.2, 2.34.1 and 2.34.0](/images/pypi-requests-release-history.png)
