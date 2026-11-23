@@ -7,7 +7,7 @@ tags: ["apple","health","ai","privacy"]
 cover: "/images/apple-s-new-health-ai-study-what-joining-involves-and-what-to-check.png"
 coverAlt: "Abstract geometric cover graphic"
 sources:
-   - title: "Apple launches research study to explore the use of AI for health"
+      - title: "Apple launches research study to explore the use of AI for health"
     url: "https://www.apple.com/newsroom/2026/11/apple-launches-research-study-to-explore-the-use-of-ai-for-health/"
 ---
 If you have ever typed a health question into a chatbot, Apple now wants to study how that goes. It has opened a research study in the US, and you can take part if you meet a few requirements.
