@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false 
 title: title: "A Quick Phone Setup Checklist for the Family Tech Helper"
 description: "Setting up a relative's new phone? Mozilla's open letter pushes one small step, changing the default browser. Here's what it means and how to do it in minutes."
 pubDate: "2026-11-22T04:47:37.085Z"
