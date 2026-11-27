@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 title: "How to Spot a Fake Ransomware \"Recovery\" Service"
 description: "A U.S. indictment alleges a ransomware \"help\" firm secretly paid hackers and marked up the bill. Here are the warning signs to check before you hire anyone."
 pubDate: "2026-11-27T04:55:22.780Z"
@@ -7,7 +7,7 @@ tags: ["ransomware","scams","small business","cybersecurity"]
 cover: "/images/how-to-spot-a-fake-ransomware-recovery-service.png"
 coverAlt: "Abstract geometric cover graphic"
 sources:
-- title: "CTO of 'RansomwareHelp' Indicted for Wire Fraud"
+  - title: "CTO of 'RansomwareHelp' Indicted for Wire Fraud"
     url: "https://krebsonsecurity.com/2026/11/cto-of-ransomwarehelp-indicted-for-wire-fraud/"
 ---
 If ransomware locks your files, you will be scared, rushed and looking for someone to call. That is exactly when a bad "recovery" service can do the most damage.
